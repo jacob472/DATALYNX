@@ -1,0 +1,273 @@
+# Simple wo<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataLynx - Your Data Agent</title>
+    <style>
+        /* ... (rest of your CSS) ... */
+        .floating-order-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #28a745; /* Green color */
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure it stays on top */
+            transition: background-color 0.3s ease;
+        }
+        .floating-order-button:hover {
+            background-color: #218838;
+        }
+        /* ... (rest of your CSS) ... */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to DataLynx!</h1>
+        <p>Your trusted agent for affordable data packages in Ghana.</p>
+
+        <h2>Available Data Packages</h2>
+        <div id="data-packages">
+            <div class="package">
+                <div class="package-info">
+                    <strong>1GB</strong> - GHS 5.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>2GB</strong> - GHS 9.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>3GB</strong> - GHS 13.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>4GB</strong> - GHS 17.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>5GB</strong> - GHS 21.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>6GB</strong> - GHS 25.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>7GB</strong> - GHS 29.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>8GB</strong> - GHS 33.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>9GB</strong> - GHS 37.00
+                </div>
+            </div>
+        </div>
+
+        <div id="package-selection">
+            <label for="selected-package">Select a Data Package:</label>
+            <select id="selected-package">
+                <option value="">-- Select a package --</option>
+                <option value="1GB - 5.00">1GB - GHS 5.00</option>
+                <option value="2GB - 9.00">2GB - GHS 9.00</option>
+                <option value="3GB - 13.00">3GB - GHS 13.00</option>
+                <option value="4GB - 17.00">4GB - GHS 17.00</option>
+                <option value="5GB - 21.00">5GB - GHS 21.00</option>
+                <option value="6GB - 25.00">6GB - GHS 25.00</option>
+                <option value="7GB - 29.00">7GB - GHS 29.00</option>
+                <option value="8GB - 33.00">8GB - GHS 33.00</option>
+                <option value="9GB - 37.00">9GB - GHS 37.00</option>
+            </select>
+        </div>
+
+        <button class="floating-order-button" onclick="showOrderForm()">Order Now</button>
+
+        <div id="order-details-form" class="hidden">
+            <h2>Order Details</h2>
+            <label for="order-number">Order Number:</label>
+            <input type="text" id="order-number" value="" readonly>
+
+            <label for="selected-data-size">Data Package:</label>
+            <input type="text" id="selected-data-size" value="" readonly>
+
+            <label for="billing-name">Billing Name:</label>
+            <input type="text" id="billing-name" placeholder="Enter billing name">
+
+            <label for="billing-email">Billing Email:</label>
+            <input type="email" id="billing-email" placeholder="Enter billing email">
+
+            <label for="billing-phone">Billing Phone Number (e.g., 050xxxxxxx):</label>
+            <input type="tel" id="billing-phone" placeholder="Enter phone number">
+
+            <button onclick="submitOrder()">Place Order</button>
+            <button onclick="hideOrderForm()">Cancel</button>
+        </div>
+
+        <div id="message-area">
+            <h2>Order Status</h2>
+            <div id="order-message"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentOrderNumber = 1001; // Start with an initial order number
+        let selectedPackageInfo = "";
+        const notificationEmail = "your_email@example.com"; // Replace with your actual email address
+
+        function showOrderForm() {
+            const packageSelect = document.getElementById('selected-package');
+            selectedPackageInfo = packageSelect.value;
+
+            if (!selectedPackageInfo) {
+                alert("Please select a data package before ordering.");
+                return;
+            }
+
+            document.getElementById('order-number').value = generateOrderNumber();
+            document.getElementById('selected-data-size').value = selectedPackageInfo;
+            document.getElementById('order-details-form').classList.remove('hidden');
+            document.getElementById('message-area').innerHTML = '<h2>Order Status</h2><div id="order-message"></div>'; // Reset message area
+        }
+
+        function hideOrderForm() {
+            document.getElementById('order-details-form').classList.add('hidden');
+        }
+
+        function generateOrderNumber() {
+            return "ORD-" + currentOrderNumber++;
+        }
+
+        function submitOrder() {
+            const orderNumber = document.getElementById('order-number').value;
+            const billingName = document.getElementById('billing-name').value.trim();
+            const billingEmail = document.getElementById('billing-email').value.trim();
+            const billingPhone = document.getElementById('billing-phone').value.trim();
+            const orderMessageDiv = document.getElementById('order-message');
+
+            if (!billingName) {
+                orderMessageDiv.innerHTML = '<p style="color: red;">Please enter the billing name.</p>';
+                return;
+            }
+
+            if (!billingEmail) {
+                orderMessageDiv.innerHTML = '<p style="color: red;">Please enter the billing email.</p>';
+                return;
+            }
+
+            if (!/^\d{10}$/.test(billingPhone) || !billingPhone.startsWith('0')) {
+                orderMessageDiv.innerHTML = '<p style="color: red;">Please enter a valid Ghanaian phone number (e.g., 050xxxxxxx).</p>';
+                return;
+            }
+
+            orderMessageDiv.innerHTML = `<p style="color: green;">Order placed successfully!</p>
+                                       <p><strong>Order Number:</strong> ${orderNumber}</p>
+                                       <p><strong>Package:</strong> ${selectedPackageInfo}</p>
+                                       <p>Billing Name: ${billingName}</p>
+                                       <p>Billing Email: ${billingEmail}</p>
+                                       <p>Billing Phone: ${billingPhone}</p>
+                                       <p>You will receive a confirmation shortly. Thank you for choosing DataLynx!</p>`;
+
+            console.log("Order Details:", {
+                orderNumber: orderNumber,
+                packageInfo: selectedPackageInfo,
+                billingName: billingName,
+                billingEmail: billingEmail,
+                billingPhone: billingPhone
+            });
+
+            sendOrderNotificationEmail({
+                orderNumber: orderNumber,
+                packageInfo: selectedPackageInfo,
+                billingName: billingName,
+                billingEmail: billingEmail,
+                billingPhone: billingPhone
+            });
+
+            hideOrderForm();
+            document.getElementById('selected-package').value = ''; // Reset the dropdown
+            // In a real application, you would send this order information to your server.
+        }
+
+        function sendOrderNotificationEmail(orderData) {
+            // This is client-side JavaScript and cannot directly send emails.
+            // For security and functionality, you need to send this data to a server-side script
+            // which will then handle sending the email.
+
+            const subject = `New DataLynx Order - ${orderData.orderNumber}`;
+            const body = `A new data package order has been placed:\n\n` +
+                         `Order Number: ${orderData.orderNumber}\n` +
+                         `Package: ${orderData.packageInfo}\n` +
+                         `Billing Name: ${orderData.billingName}\n` +
+                         `Billing Email: ${orderData.billingEmail}\n` +
+                         `Billing Phone: ${orderData.billingPhone}\n\n` +
+                         `Check your system for further processing.`;
+
+            // In a real scenario, you would use an AJAX request (e.g., fetch or XMLHttpRequest)
+            // to send this 'subject' and 'body' to a server-side endpoint.
+
+            console.log("Simulating sending email:", { to: notificationEmail, subject: subject, body: body });
+            alert("Order placed! You will receive a confirmation shortly (and a notification has been simulated to be sent).");
+        }
+    </script>
+</body>
+</html>
+rkflow for deploying static content to GitHub Pages
+name: Deploy static content to Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
