@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataLynx - Your Data Agent</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative; /* To contain the floating button if needed */
+        }
+        h1, h2 {
+            color: #007bff;
+        }
+        .package {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .package-info {
+            /* Styles for package info */
+        }
+        #order-details-form {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        #order-details-form h2 {
+            margin-top: 0;
+        }
+        #order-details-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        #order-details-form input[type="text"],
+        #order-details-form input[type="email"],
+        #order-details-form input[type="tel"],
+        #order-details-form select,
+        #order-details-form button {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        #order-details-form button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        #order-details-form button:hover {
+            background-color: #218838;
+        }
+        .hidden {
+            display: none;
+        }
+        #message-area {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        #message-area p {
+            margin: 5px 0;
+        }
+        #package-selection {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        #package-selection label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        #package-selection select {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        .floating-order-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #28a745; /* Green color */
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure it stays on top */
+            transition: background-color 0.3s ease;
+        }
+        .floating-order-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to DataLynx!</h1>
+        <p>Your trusted agent for affordable data packages in Ghana.</p>
+
+        <h2>Available Data Packages</h2>
+        <div id="data-packages">
+            <div class="package">
+                <div class="package-info">
+                    <strong>1GB</strong> - GHS 5.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>2GB</strong> - GHS 9.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>3GB</strong> - GHS 13.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>4GB</strong> - GHS 17.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>5GB</strong> - GHS 21.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>6GB</strong> - GHS 25.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>7GB</strong> - GHS 29.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>8GB</strong> - GHS 33.00
+                </div>
+            </div>
+            <div class="package">
+                <div class="package-info">
+                    <strong>9GB</strong> - GHS 37.00
+                </div>
+            </div>
+        </div>
+
+        <div id="package-selection">
+            <label for="selected-package">Select a Data Package:</label>
+            <select id="selected-package">
+                <option value="">-- Select a package --</option>
+                <option value="1GB - 5.00">1GB - GHS 5.00</option>
+                <option value="2GB - 9.00">2GB - GHS 9.00</option>
+                <option value="3GB - 13.00">3GB - GHS 13.00</option>
+                <option value="4GB - 17.00">4GB - GHS 17.00</option>
+                <option value="5GB - 21.00">5GB - GHS 21.00</option>
+                <option value="6GB - 25.00">6GB - GHS 25.00</option>
+                <option value="7GB - 29.00">7GB - GHS 29.00</option>
+                <option value="8GB - 33.00">8GB - GHS 33.00</option>
+                <option value="9GB - 37.00">9GB - GHS 37.00</option>
+            </select>
+        </div>
+
+        <button class="floating-order-button" onclick="showOrderForm()">Order Now</button>
+
+        <div id="order-details-form" class="hidden">
+            <h2>Order Details</h2>
+            <label for="order-number">Order Number:</label>
+            <input type="text" id="order-number" value="" readonly>
+
+            <label for="selected-data-size">Data Package:</label>
+            <input type="text" id="selected-data-size" value="" readonly>
+
+            <label for="billing-name">Billing Name:</label>
+            <input type="text" id="billing-name" placeholder="Enter billing name">
+
+            <label for="billing-email">Billing Email:</label>
+            <input type="email" id="billing-email" placeholder="Enter billing email">
+
+            <label for="billing-phone">Billing Phone Number (e.g., 050xxxxxxx):</label>
+            <input type="tel" id="billing-phone" placeholder="Enter phone number">
+
+            <button onclick="submitOrder()">Place Order</button>
+            <button onclick="hideOrderForm()">Cancel</button>
+        </div>
+
+        <div id="message-area">
+            <h2>Order Status</h2>
+            <div id="order-message"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentOrderNumber = 1001; // Start with an initial order number
+        let selectedPackageInfo = "";
+
+        function showOrderForm() {
+            const packageSelect = document.getElementById('selected-package');
+            selectedPackageInfo = packageSelect.value;
+
+            if (!selectedPackageInfo) {
+                alert("Please select a data package before ordering.");
+                return;
+            }
+
+            document.getElementById('order-number').value = generateOrderNumber();
+            document.getElementById('selected-data-size').value = selectedPackageInfo;
+            document.getElementById('order-details-form').classList.remove('hidden');
+            document.getElementById('message-area').innerHTML = '<h2>Order Status</h2><div id="order-message"></div>'; // Reset message area
+        }
+
+        function hideOrderForm() {
+            document.getElementById('order-details-form').classList.add('hidden');
+        }
+
+        function generateOrderNumber() {
+            return "ORD-" + currentOrderNumber++;
+        }
+
+        function submitOrder() {
+            const orderNumber = document.getElementById('order-number').value;
+            const billingName = document.getElementById('billing-name').value.trim();
+            const billingEmail = document.getElementById('billing-email').value.trim();
+            const billingPhone = document.getElementById('billing-phone').value.trim();
+            const orderMessageDiv = document.getElementById('order-message');
+
+            if (!billingName) {
+                orderMessageDiv.innerHTML = '<p style="color: red;">Please enter the billing name.</p>';
+                return;
+            }
+
+            if (!billingEmail) {
+                orderMessageDiv.innerHTML = '<p style="color: red;">Please enter the billing email.</p>';
+                return;
+            }
+
+            if (!/^\d{10}$/.test(billingPhone) || !billingPhone.startsWith('0')) {
+                orderMessageDiv.innerHTML = '<p style="color: red;">Please enter a valid Ghanaian phone number (e.g., 050xxxxxxx).</p>';
+                return;
+            }
+
+            orderMessageDiv.innerHTML = `<p style="color: green;">Order placed successfully!</p>
+                                       <p><strong>Order Number:</strong> ${orderNumber}</p>
+                                       <p><strong>Package:</strong> ${selectedPackageInfo}</p>
+                                       <p>Billing Name: ${billingName}</p>
+                                       <p>Billing Email: ${billingEmail}</p>
+                                       <p>Billing Phone: ${billingPhone}</p>
+                                       <p>You will receive a confirmation shortly. Thank you for choosing DataLynx!</p>`;
+
+            console.log("Order Details:", {
+                orderNumber: orderNumber,
+                packageInfo: selectedPackageInfo,
+                billingName: billingName,
+                billingEmail: billingEmail,
+                billingPhone: billingPhone
+            });
+
+            hideOrderForm();
+            document.getElementById('selected-package').value = ''; // Reset the dropdown
+            // In a real application, you would send this order information to your server.
+        }
+    </script>
+</body>
+</html>
+
+
+
